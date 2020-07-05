@@ -9,8 +9,10 @@ import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 
 import com.example.consumingrest.Object.Quote;
+
 import com.example.consumingrest.Object.Person;
 import com.example.consumingrest.Repository.PersonRepository;
 
@@ -33,19 +35,37 @@ public class ConsumingRestApplication {
 	}
 
 	@Bean
+	public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+		return args -> {
+			// System.out.println("Let's inspect the beans provided by Spring Boot:");
+			// String[] beanNames = ctx.getBeanDefinitionNames();
+			// Arrays.sort(beanNames);
+			// for (String beanName : beanNames) {
+			// System.out.println(beanName);
+			// }
+		};
+	}
+
+	@Bean
 	public CommandLineRunner run(RestTemplate restTemplate) throws Exception {
 		return args -> {
-			Quote quote = restTemplate.getForObject("https://gturnquist-quoters.cfapps.io/api/random", Quote.class);
-			log.info(quote.toString());
+			queryApi(restTemplate);
+			setUpMongo();
 			log.info(String.format("This controller runs in %s", URL));
 
-			personRepository.deleteAll();
-
-			// save a couple of Persons
-			personRepository.save(new Person("Alice", "Smith"));
-			personRepository.save(new Person("Bob", "Smith"));
-
 		};
+	}
+
+	private void queryApi(RestTemplate restTemplate) throws Exception {
+		Quote quote = restTemplate.getForObject("https://gturnquist-quoters.cfapps.io/api/random", Quote.class);
+		log.info(quote.toString());
+	}
+
+	private void setUpMongo() throws Exception {
+		personRepository.deleteAll();
+		// save a couple of Persons
+		personRepository.save(new Person("Alice", "Smith"));
+		personRepository.save(new Person("Bob", "Smith"));
 	}
 
 }

@@ -32,6 +32,12 @@ public class GreetingController {
     public HttpEntity<ShortGreeting> shortGreeting(@RequestParam(value = "name", defaultValue = "World") String name) {
 
         ShortGreeting greeting = new ShortGreeting(String.format(TEMPLATE, name));
+        // var _class = GreetingController.class;
+        // var _methodOn = methodOn(_class);
+        // var _methodOnGreeting = _methodOn.greeting(name);
+        // var _linkTo = linkTo(_methodOnGreeting);
+        // var _linkToWith = _linkTo.withSelfRel();
+        // var greetingAdd = greeting.add(_linkToWith);
         greeting.add(linkTo(methodOn(GreetingController.class).greeting(name)).withSelfRel());
 
         return new ResponseEntity<>(greeting, HttpStatus.OK);
