@@ -16,7 +16,7 @@ public interface PersonRepository extends MongoRepository<Person, String> {
     // Prevents POST /people and PATCH /people/:id
     @Override
     @RestResource(exported = false)
-    public Person save(Person s);
+    public <S extends Person> S save(S s);
 
     // Prevents DELETE /people/:id
     @Override
