@@ -19,7 +19,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         if (isSecure) {
             http // http start
-                    .authorizeRequests().antMatchers("/", "/home", "/actuator/health", "/actuator", "/actuator/error")
+                    .authorizeRequests()
+                    .antMatchers("/", "/home", "/actuator/health", "/actuator", "/actuator/error", "/example",
+                            "/public/**", "/greeting/cors", "/favicon.ico")
                     .permitAll().anyRequest().authenticated().and() // authorize
                     .formLogin().loginPage("/login").permitAll().and() // login
                     .logout().permitAll(); // logout

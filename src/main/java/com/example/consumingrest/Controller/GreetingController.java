@@ -5,6 +5,7 @@ import com.example.consumingrest.Object.ShortGreeting;
 
 import java.util.concurrent.atomic.AtomicLong;
 
+// import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,12 +21,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GreetingController {
 
     private static final String TEMPLATE = "Hello, %s!";
-    private final AtomicLong counter = new AtomicLong();
+    private final AtomicLong greetingCounter = new AtomicLong();
+    private final AtomicLong greetingCorsCounter = new AtomicLong();
 
     // @RequestMapping(method=GET)
     @GetMapping("/greeting")
     public Greeting greeting(@RequestParam(value = "name", defaultValue = "World") String name) {
-        return new Greeting(counter.incrementAndGet(), String.format(TEMPLATE, name));
+        return new Greeting(greetingCounter.incrementAndGet(), String.format(TEMPLATE, name));
+    }
+
+    // @CrossOrigin(origins = "http://localhost:9000")
+    @GetMapping("/greeting/cors")
+    public Greeting greetingCors(@RequestParam(value = "name", defaultValue = "World") String name) {
+        return new Greeting(greetingCorsCounter.incrementAndGet(), String.format(TEMPLATE, name));
     }
 
     @RequestMapping("/shortGreeting")

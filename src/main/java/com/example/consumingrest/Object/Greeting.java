@@ -13,8 +13,8 @@ public class Greeting {
         return id;
     }
 
-    // public String getContent() {
-    public String getFake() {
+    // public String getFake() { => {id, fake}
+    public String getContent() {
         return content;
     }
 }
