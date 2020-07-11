@@ -21,10 +21,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             http // http start
                     .authorizeRequests()
                     .antMatchers("/", "/home", "/actuator/health", "/actuator", "/actuator/error", "/example",
-                            "/public/**", "/greeting/cors", "/favicon.ico")
-                    .permitAll().anyRequest().authenticated().and() // authorize
-                    .formLogin().loginPage("/login").permitAll().and() // login
-                    .logout().permitAll(); // logout
+                            "/public/**", "/greeting/cors", "/favicon.ico", "/quotes")
+                    .permitAll()
+                    .anyRequest()
+                    .authenticated()
+                    .and() // authorize
+                    .formLogin()
+                    .loginPage("/login")
+                    .permitAll()
+                    .and() // login
+                    .logout()
+                    .permitAll(); // logout
         }
 
     }
@@ -32,7 +39,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     @Override
     public UserDetailsService userDetailsService() {
-        UserDetails user = User.withDefaultPasswordEncoder().username("user").password("password").roles("USER")
+        UserDetails user = User.withDefaultPasswordEncoder()
+                .username("user")
+                .password("password")
+                .roles("USER")
                 .build();
 
         return new InMemoryUserDetailsManager(user);
