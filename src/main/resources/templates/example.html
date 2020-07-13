@@ -11,6 +11,10 @@
     <div>
         <p class="greeting-id">The ID is </p>
         <p class="greeting-content">The content is </p>
+        <div th:object="${quote}">
+            <p>The ID is <span th:text="*{getId()}"></span></p>
+            <p>The Content is <span th:text="*{getQuote()}"></span></p>
+        </div>
     </div>
 </body>
 

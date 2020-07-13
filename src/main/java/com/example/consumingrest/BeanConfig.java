@@ -42,7 +42,7 @@ public class BeanConfig {
         return builder.build();
     }
 
-    @Bean
+    @Bean(destroyMethod = "shutdown")
     public ExecutorService executor() {
         return Executors.newFixedThreadPool(4);
     }
